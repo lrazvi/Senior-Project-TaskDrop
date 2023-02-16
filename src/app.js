@@ -1,184 +1,244 @@
 import { render } from "@testing-library/react";
-import React, {  useState } from "react";
+import React, {useEffect, useState, useCallback} from 'react';
 import  ReactDOM  from "react-dom/client";
 import {  Link } from "react-router-dom";
 //import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import './style.css';
-import Tasks from'./components/tasks';
-import Dogs from "./components/calendar";
+import Phaser from "phaser";
+//import TitleScene from './components/title'
+import App1 from "./components/app1";
+import scene1 from "./components/s1";
+import endscene from "./components/end";
+import DialogBox from "./components/dialogbox";
+import m from './components/ghost_000.png';
+import g1 from './components/obj_0010_Layer-11.png'
+import g2 from './components/obj_0011_Layer-12.png'
+import g3 from './components/obj_0012_Layer-13.png'
+import f from './components/icons8-fish-food-50.png'
+import b from './components/mixkit-arcade-game-jump-coin-216.wav';
 
 
-
-
-  /*function List(){
-    let butt = useRef(null);
-    //render(){
-    return(
-      <div id = "container">
-        <header className = "h">
-          <input type="text" placeholder="Enter a task..." id="item" />
-          <button type="button" id = "add" ref={butt} >
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
-              <path
-                d="M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z"
-              ></path>
-            </svg>
-          </button>
-        </header>
-
-        <h2>To Do</h2>
-        <ul className="todo" id="todo"></ul>
-        <h2>Completed</h2>
-        <ul className="completed" id="completed"></ul>
-
-        <ul className="todo" id="todo">
-          <li>
-          
-            <span className="buttons">
-              <button className="remove"></button>
-              <button className="complete"></button>
-            </span>
-          </li>
-        </ul> 
-
-        <link href="https://fonts.googleapis.com/css?family=Josefin+Sans:300,400,700"
-          rel="stylesheet"/>
-
-      </div>
-
-    );
-    }
-  
-
-  const root = ReactDOM.createRoot(document.getElementById('root'));
-  root.render(<List />);
-
-  export default List*/
-
-  function App() {
-    const [list, setList] = useState([]);
-    const [input, setInput] = useState({
-      todo: "",
-      dline: ""
-    });
-    const [clist, setcList] = useState([]);
-    const [point, setPoint] = useState(0);
-    //const [date, setDate] = useState("");
-    const [desc, setDesc] =  useState("");
-    const [delist, setdeList] = useState([])
-  
-    const addTodo = (todo, dline) => {
-      const newTodo = {
-        id: Math.random(),
-        todo: todo,
-        dline: dline
-      };
-
-      // add the todo to the list
-      setList([...list, newTodo]);
-      // clear input box
-      setInput({todo:"", dline:""});
-      //setDate("");
-    };
-
-    const deleteTodo = (id) => {
-      // Filter out todo with the id
-      const newList = list.filter((todo) => todo.id !== id);
-      setList(newList);
-      
-      const nList = clist.filter((todo) => todo.id !== id);
-      setcList(nList);
-    };
-
-    const completeTodo = (id) => {
-      // Filter out todo with the id
-      //const newList = list.filter((todo) => todo.id == id);
-      const newList = list.filter((todo) => todo.id !== id);
-  
-      setList(newList);
-      setcList(clist.concat(list.find((todo) => todo.id === id)));
-      setPoint(point + 1);
-    };
-
-    const addDesc = (desc) => {
-      const newDesc = {did: Math.random(), desc:desc};
-    
-      setdeList([...delist, newDesc]);
-      setDesc('');
-      //setList([...list, newDesc]);
-    }
-  
-    return (
-      <div>
-        <header id="head">
-          <Link to="/">Home</Link>
-          <Link to="/Dogs">Dogs</Link>
-          
-          <input
-            type="text"
-            name="task"
-            placeholder = "enter a task..."
-            value={input.todo}
-            onChange={(e) => setInput(e.target.value)}
-          />
-          
-          <input
-            type="text"
-            name="date"
-            placeholder = "deadline: date/time"
-            value={input.dline}
-            onChange={(i) => setInput(i.target.value)}
-          />
-          <button id = "add" onClick={() => addTodo(input)}>Add</button>
-          
-        </header>
-        <div id="lists">
-          <h1>Todo List</h1>
-          <ul>
-            {list.map((todo) => (
-              <li key={todo.id}>
-                {/* <button onClick={addDesc }>{todo.todo}</button> */}
-                {todo.todo}
-                <button onClick={() => deleteTodo(todo.id)}>&times;</button>
-                <button onClick={() => completeTodo(todo.id)}>done</button>
-                <input 
-                  value={desc}
-                  placeholder = "add a description..."
-                  onChange={(i) => setDesc(i.target.value)}
-                />
-                <button onClick={() => addDesc(desc)}>enter</button>
-                {delist.map((desc) => 
-                  <li key={desc.did}>
-                    
-                    {desc.desc}
-                    
-                  </li>
-                )}
-
-              </li>
-            ))}
-          </ul>
-          <h1>Completed</h1>
-          <ul>
-            {clist.map((todo) => (
-              <li key={todo.id}>
-                {todo.todo}
-                <button onClick={() => deleteTodo(todo.id)}>&times;</button>
-              </li>
-            ))}
-          </ul>
-          <div>
-            <h2>Points Earned</h2>
-            <p>{point}</p>
-          </div>
-        </div>
-        <link href="https://fonts.cdnfonts.com/css/common-pixel" rel="stylesheet"></link>
-        <link href='https://fonts.googleapis.com/css?family=VT323' rel='stylesheet' type='text/css'></link>
-      </div>
-    );
+class TitleScene extends Phaser.Scene{
+  constructor(){
+      super({key: 'TitleScene'});
   }
   
-  export default App;
+  preload(){
+    this.textures.addBase64('g1', g1);
+    this.textures.addBase64('g2', g2);
+    this.textures.addBase64('g3', g3);
+    this.load.spritesheet('cat', m, { frameWidth: 32, frameHeight: 32 });
+    this.load.audio('button', b);
+
+  }
+  create(){
+    var button = this.sound.add('button', {loop: false});
+    var gro1 =  this.add.image(30, 530, 'g1')
+    .setScale(4);
+    var gro2 =  this.add.image(90, 530, 'g2')
+    .setScale(4);
+    var gro21 =  this.add.image(150, 530, 'g2')
+    .setScale(4);
+    var gro22 =  this.add.image(210, 530, 'g2')
+    .setScale(4);
+    var gro23 =  this.add.image(270, 530, 'g2')
+    .setScale(4);
+    var gro24 =  this.add.image(330, 530, 'g2')
+    .setScale(4);
+    var gro25 =  this.add.image(390, 530, 'g2')
+    .setScale(4);
+    var gro26 =  this.add.image(450, 530, 'g2')
+    .setScale(4);
+    var gro27 =  this.add.image(510, 530, 'g2')
+    .setScale(4);
+    var gro28 =  this.add.image(570, 530, 'g2')
+    .setScale(4);
+    var gro29 =  this.add.image(630, 530, 'g2')
+    .setScale(4);
+    var gro30 =  this.add.image(690, 530, 'g2')
+    .setScale(4);
+    var gro31 =  this.add.image(750, 530, 'g2')
+    .setScale(4);
+    var gro32 =  this.add.image(810, 530, 'g2')
+    .setScale(4);
+    var gro33 =  this.add.image(870, 530, 'g2')
+    .setScale(4);
+    var gro34 =  this.add.image(930, 530, 'g2')
+    .setScale(4);
+    var gro3 =  this.add.image(990, 530, 'g3')
+    .setScale(4);
+
+
+    this.sprite = this.add.sprite(300, 200, 'cat', 32);
+    this.sprite.setScale(3, 3);
+    const clickButton = this.add.text(420, 250, 'START', { fill: '#0f0' })
+    .setFontSize(60)
+    .setInteractive()
+    .setFontFamily('VT323')
+    .on('pointerover', () => { clickButton.setStyle({fill: '#0000FF'}) })
+    .on('pointerout', () => { clickButton.setStyle({fill: '#0f0'}) })
+    .on('pointerdown', () =>  {
+        console.log("meow");
+        this.scene.start("scene1");
+        button.play();
+        const currMessage = 0;
+        const cEvent = new CustomEvent('new-dialog', {detail: {currMessage},});
+        window.dispatchEvent(cEvent);
+    });
+
+    this.anims.create({
+      key: "walk",
+      frameRate: 4,
+      frames: this.anims.generateFrameNumbers("cat", {start: 32, end:35}),
+      repeat: -1
+    });
+
+    this.sprite.anims.play('walk');
+      
+  }
+  
+}
+
+
+function App() {
+  const [showInput, setShowInput] = useState(false);
+  const [username, setUserName] = useState('');
+  const [messages, setMessage] = useState('');
+  const [currMessage, setCurrMessage] = useState(0);
+  const [showDialogBox, setShowDialogBox] = useState(false);
+  const [showList, setShowList] = useState(false);
+  
+  
+  const startMessage = [
+    `hello ${(username !== "" ? username: "user")}`,
+    "Welcome to taskDrop, a productivity web app designed to help you have more fun while organizing your tasks",
+    "As you can see, you have a little cat here to keep you company, you can click to make it walk or hover your mouse over it to play with it",
+    "When you complete a certain amount of tasks you will gain affection points from your cat!",
+    "Let's begin by adding some tasks you would like to complete today, try to add at least 3 tasks",
+    "Click 'done' once you've finished entering the tasks you wish to complete."
+  ];
+
+  const nextMessage = [
+    "great job!",
+    "By listing and organizing the things you need to do, you have taken the first step towards accomplishing your tasks!",
+    "If you have some more specific goals in mind that won't translate well into a list, click 'Other Goals' where you'll have more free space to write out your thoughts and plans.",
+    "Now try working on these tasks, and if you need to add more tasks feel free to come back and add some",
+    "When you're finished for the day, click 'finish'."
+  ];
+
+  const finishMessage = [
+    "Congratulations!",
+    "Accomplishing the tasks you need to do isn't always an easy thing, so whether you completed 1 or all of them, you should give yourself a pat on the back for getting through the day :)",
+    "Come back again soon!"
+  ];
+
+  const dialogues = [startMessage, nextMessage, finishMessage];
+
+  useEffect(() => {
+    const game = new Phaser.Game({
+        type: Phaser.AUTO,
+        orientation: Phaser.Scale.LANDSCAPE,
+        scale: {
+          mode: Phaser.Scale.ENVELOP,
+        },
+        parent: 'phaser-game',
+        scene: [TitleScene, scene1, endscene],
+        backgroundColor: '#608cbc'
+    });
+
+    const nameEventListener = ({ detail }) => {
+      setShowInput(true);
+    };
+    window.addEventListener('new-name', nameEventListener);
+
+    const dialogBoxEventListener = ({ detail }) => {
+      setCurrMessage(detail.currMessage);
+      setMessage(
+        dialogues[detail.currMessage]
+      );
+      setShowDialogBox(true);
+    };
+    window.addEventListener('new-dialog', dialogBoxEventListener);
+
+    const listEventListener = ({ detail }) => {
+      setShowList(true);
+    };
+    window.addEventListener('new-list', listEventListener);
+
+    const finishedEventListener = () => {
+      setShowList(false);
+    }
+    window.addEventListener('finish', finishedEventListener);
+
+    return () => {
+        window.removeEventListener('new-list', listEventListener);
+        window.removeEventListener('new-name', nameEventListener);
+        window.removeEventListener('new-dialog', dialogBoxEventListener);
+        window.removeEventListener('finish', finishedEventListener);
+    };
+  }, [setCurrMessage, setMessage]);
+
+  const handleMessageIsDone = useCallback(() => {
+    const customEvent = new CustomEvent(`end-${currMessage}-dialog`);
+    window.dispatchEvent(customEvent);
+    setMessage('');
+    setCurrMessage('');
+    setShowDialogBox(false);
+    if(currMessage < 2){
+      setShowList(true);
+    }
+    
+  }, [currMessage]);
+
+  //const cEvent = new CustomEvent('new-dialog', {detail: {currMessage},});
+
+  return (
+    <div id = "phaser-game">
+      <div 
+      style={
+        {position: 'absolute',
+        right: 500,
+        padding: 70,
+        }}>
+          {/* {showInput ?
+            <>
+                <div>Enter your name</div>
+                <input type="text" 
+                    value={username} 
+                    onChange = {(e) => setUserName(e.target.value)}
+                />
+                <button onClick={() => {window.dispatchEvent(cEvent);{setShowInput(false);setCurrMessage(currMessage + 1)}}}>Enter</button>
+            </>
+            :null
+        } */}
+        {showDialogBox ? 
+          <>
+            <DialogBox 
+            userName= {username}
+            messages = {messages}
+            onDialogEnded={handleMessageIsDone}
+            />    
+          </>
+          :null
+        }
+
+        {showList ?
+          <App1
+          currMessage = {currMessage}
+          />
+          :null
+        }
+      </div>
+      <link href="https://fonts.cdnfonts.com/css/common-pixel" rel="stylesheet"></link>
+      <link href='https://fonts.googleapis.com/css?family=VT323' rel='stylesheet' type='text/css'></link>
+    
+    </div>
+  );
+
+
+}
+  
+export default App;
 
   
   

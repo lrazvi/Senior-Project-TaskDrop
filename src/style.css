@@ -184,64 +184,164 @@ button:hover svg path {
 
 *{
   
-  margin: auto;  
+  /*margin: auto;  
   padding: 10px;
+  text-align: center;*/
+  align-self: center;
+  align-items: center;
+  
+}
+
+.lists {
+  /* text-align: center; */
+  background-color:rgb(252, 201, 139);
+  border: solid;
+  border-radius: 10px;
+  padding: 20px;
+  font-family: 'VT323';
+  width: 300px; 
+  max-height: 700px;
+}
+
+h1, h2{
   text-align: center;
 }
 
+.lists, header, .buttons{
+  position: relative; 
+  right: 400px;          
+}
 
-
-#lists{
-  text-align: center;
-  background-color: pink;
-  
+button{
+  padding: 5px;
+  border-radius: 10px;
   font-family: 'VT323';
-                                                
+  cursor: pointer;
+  background-color:antiquewhite ;
+}
+
+button:hover{
+  background-color:rgb(52, 102, 195);
+  color: cornsilk;
+}
+
+input{
+  font-family: 'VT323';
+  padding: 10px;
+  width: 200px;
+  border-radius: 10px;
+}
+
+header{
+  height: 40px;
 }
 
 #add{
   font-family: 'VT323';
 }
 
-
-
 .app {
   text-align: center;
 }
 
 
-
-.app-logo {
-  height: 40vmin;
-  pointer-events: none;
+.DialogBox {
+  /*image-rendering: 'pixelated';
+  align-items: center;*/
+  align-self: center;
+  background-color: rgb(252, 201, 139)/*#e2b27e*/;
+  border: solid;
+  border-radius: 10px;
+  padding: 25px;
+  position: absolute;
+  margin: '0 auto';
+  top: 90%;
+  /*text-align: center;*/
+  margin-right: -30%;
+  width: 500px;
+  right: 10px; 
+  /* text-transform: uppercase; */
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .app-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.dialogTitle {
+  font-size: 1.1rem;
+  font-weight: bold;
+  margin-bottom: 15px;
+  font-family: 'VT323';
 }
 
-.app-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.dialogFooter {
+  cursor: pointer;
+  font-size: 0.9rem;
+  margin-top: 15px;
+  text-align: end;
+  font-family: 'VT323';
+  margin-left: 90%;
 }
 
-.App-link {
-  color: #61dafb;
+.DialogMessage{
+  font-size: 15 px;
+  font-family: 'VT323';
 }
 
-@keyframes app-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.PointBox{
+  border:solid;
+  background-color: bisque;
+  border-radius: 10px;
+  /* text-align: center; */
+  padding: 10px;
+  font-size:x-large;
+  font-family: 'VT323';
+  font-weight: bold;
+  text-transform: uppercase;
+  /* transition: width 2s, height 4s; 
+  animation-name: pointplus;
+  animation-duration: 1s;*/
+  width: 150px;
+  max-width: 150px;
+  height: 100px;
+  position: absolute;
+  left: 1090px;
+}
+
+.goalbox{
+  /* height: 50px; */
+  /*width: 100px;*/
+  position: relative;
+  border: solid;
+  border-radius: 10px;
+  padding: 12px 20px;
+  right: 90%;
+  resize: vertical;
+}
+
+.thoghtbox{
+  background-color:rgb(178, 240, 230);
+  border: solid;
+  border-radius: 10px;
+  padding: 15px;
+  /* position: absolute; */
+  margin: '0 auto';
+  /* top: 90%;
+  text-align: center;
+  margin-right: -30%;
+  right: 10px;  */
+  position: absolute;
+  width: 300px;
+  max-height: 500px;
+  left: 600px;
+  top: 200px;
+  font-family: 'VT323';
+}
+
+.thoghtbox::after{
+  content: \a;
+  white-space: pre;
+}
+
+
+@keyframes pointplus {
+  0%   {width: 35px; height: 35px;}
+  50%  {width: 45px; height: 45px; background-color: chartreuse;}
+  100%  {width: 35px; height: 35px;}
 }
