@@ -13,7 +13,6 @@ export default class endscene extends Phaser.Scene{
     }
 
     create(){
-        // this.add.text(200, 200, 'meowmeow')
         const currMessage = 2;
         const cEvent = new CustomEvent('new-dialog', {detail: {currMessage},});
         window.dispatchEvent(cEvent);

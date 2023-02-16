@@ -9,21 +9,16 @@ const App1 = ({currMessage}) => {
     const [list, setList] = useState([]);
     const [input, setInput] = useState("");
     const [currTodo, setCurrTodo] = useState({id:0, todo:""});
-    //const [clist, setcList] = useState([]);
     const [point, setPoint] = useState(0);
-    const [descInp, setDescInp] =  useState("");
     const [desc, setDesc] = useState({did:0, de:"", show: false});
 
-    const [delist, setdeList] = useState([]);
     const[showD, setShowD] = useState(false);
     const[don, setDon] = useState(false);
     const [otherInp, setOther] = useState("");
     const [thought, setThought] = useState([]);
-    const [textColor, setTextColor] = useState('black');
     const[aff, setAff] = useState("");
     
     const bEvent = new CustomEvent('button');
-    //window.dispatchEvent('button');
 
   
     const addTodo = (todo) => {
@@ -37,18 +32,12 @@ const App1 = ({currMessage}) => {
       setList([...list, newTodo]);
       // clear input box
       setInput("");
-      //setDate("");
     };
 
     const deleteTodo = (id) => {
       // Filter out todo with the id
       const newList = list.filter((todo) => todo.id !== id);
       setList(newList);
-      
-      // const nList = clist.filter((todo) => todo.id !== id);
-      // setcList(nList);
-
-      setdeList([]);
     };
 
     const completeTodo = (id) => {
@@ -72,25 +61,6 @@ const App1 = ({currMessage}) => {
       }
     };
 
-
-
-    /*const addDesc = (desc) => {
-      const newDesc = {did: Math.random(), desc:desc, show: false};
-
-      setDesc(newDesc);
-      //setCurrTodo({d:newDesc});
-      setdeList([...delist, newDesc]);
-      setDescInp('');
-      //setList([...list, newDesc]);
-    }
-
-    const deleteDesc = (did) => {
-      //const ndList = delist.filter((desc) => desc.did !== did);
-
-      setdeList([]);
-      //console.log('meow')
-    }*/
-
     const doneClick = () => {
       window.dispatchEvent(bEvent);
       currMessage = 1;
@@ -110,14 +80,14 @@ const App1 = ({currMessage}) => {
 
       !desc.show ?setDesc({show: true}) :setDesc({show:false})
       !showD 
-      ?setShowD(true) //setDesc({}) 
+      ?setShowD(true) 
       : setShowD(false)
     }
 
     const otherClick = (inp) => {
       window.dispatchEvent(bEvent);
       !showD 
-      ?setShowD(true) //setDesc({}) 
+      ?setShowD(true) 
       : setShowD(false)
 
       setThought([...thought, inp]);
@@ -140,7 +110,7 @@ const App1 = ({currMessage}) => {
             <header className="head">
     
               <div className="PointBox" >
-                Points: <div style={{color:textColor}}>{point} </div>   
+                Points: <div>{point} </div>   
                 Affection: {aff}
               </div>
           
@@ -163,28 +133,8 @@ const App1 = ({currMessage}) => {
                       {todo.todo}
                 
                       <button onClick={() => deleteTodo(todo.id)}>&times;</button>
-                      <button onClick={() => {completeTodo(todo.id); setTextColor('#9072fc')}}>done</button>
+                      <button onClick={() => {completeTodo(todo.id)}}>done</button>
 
-                      {/* {desc.show 
-                        ? 
-                        <>
-                          <input 
-                          value={descInp}
-                          placeholder = "add a description..."
-                          onChange={(i) => setDescInp(i.target.value)}
-                          />
-                          <button onClick={() => addDesc(descInp)}>enter</button>
-                          {delist.map((desc) => (
-                          <ol>
-                              <li key={desc.did}>
-                              {desc.desc}
-                              <button onClick={() => deleteDesc(desc.did)}>&times;</button>
-                              </li>
-                          </ol>
-                          ))}
-                        </>
-                        : null
-                      } */}
                     </li>
                   ))}
               </ul>
