@@ -184,7 +184,6 @@ function App() {
     
   }, [currMessage]);
 
-  //const cEvent = new CustomEvent('new-dialog', {detail: {currMessage},});
 
   return (
     <div id = "phaser-game">
@@ -194,17 +193,6 @@ function App() {
         right: 500,
         padding: 70,
         }}>
-          {/* {showInput ?
-            <>
-                <div>Enter your name</div>
-                <input type="text" 
-                    value={username} 
-                    onChange = {(e) => setUserName(e.target.value)}
-                />
-                <button onClick={() => {window.dispatchEvent(cEvent);{setShowInput(false);setCurrMessage(currMessage + 1)}}}>Enter</button>
-            </>
-            :null
-        } */}
         {showDialogBox ? 
           <>
             <DialogBox 
