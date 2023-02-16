@@ -13,12 +13,10 @@ const DialogBox = ({userName, messages, onDialogEnded = () =>{}}) => {
             setMessageEnded(false);
             if (currentMessage < messages.length - 1) {
                 setCurrentMessage(currentMessage + 1);
-                
             } 
             else {
                 setCurrentMessage(0);
                 onDialogEnded();
-                //console.log(messages.length);
             }
         }
         else{
@@ -35,7 +33,6 @@ const DialogBox = ({userName, messages, onDialogEnded = () =>{}}) => {
             key={currentMessage}
             onMessageEnded={() => {
                 setMessageEnded(true);
-                {/* make box disappear */}
             }}
             />
             <button onClick={handleClick}

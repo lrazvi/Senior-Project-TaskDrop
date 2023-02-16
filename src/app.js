@@ -1,11 +1,6 @@
-import { render } from "@testing-library/react";
 import React, {useEffect, useState, useCallback} from 'react';
-import  ReactDOM  from "react-dom/client";
-import {  Link } from "react-router-dom";
-//import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import './style.css';
 import Phaser from "phaser";
-//import TitleScene from './components/title'
 import App1 from "./components/app1";
 import scene1 from "./components/s1";
 import endscene from "./components/end";
@@ -14,7 +9,6 @@ import m from './components/ghost_000.png';
 import g1 from './components/obj_0010_Layer-11.png'
 import g2 from './components/obj_0011_Layer-12.png'
 import g3 from './components/obj_0012_Layer-13.png'
-import f from './components/icons8-fish-food-50.png'
 import b from './components/mixkit-arcade-game-jump-coin-216.wav';
 
 
@@ -69,7 +63,7 @@ class TitleScene extends Phaser.Scene{
     .setScale(4);
 
 
-    this.sprite = this.add.sprite(300, 200, 'cat', 32);
+    this.sprite = this.add.sprite(470, 480, 'cat', 32);
     this.sprite.setScale(3, 3);
     const clickButton = this.add.text(420, 250, 'START', { fill: '#0f0' })
     .setFontSize(60)
@@ -128,7 +122,7 @@ function App() {
 
   const finishMessage = [
     "Congratulations!",
-    "Accomplishing the tasks you need to do isn't always an easy thing, so whether you completed 1 or all of them, you should give yourself a pat on the back for getting through the day :)",
+    "Accomplishing the tasks you need to do isn't always an easy thing, so whether or not you completed all of them, you should give yourself a pat on the back for getting through the day :)",
     "Come back again soon!"
   ];
 
