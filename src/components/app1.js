@@ -43,8 +43,6 @@ const App1 = ({currMessage}) => {
     const completeTodo = (id) => {
       // Filter out todo with the id
       const newList = list.filter((todo) => todo.id !== id);
-
-      //custom heart
       
       setList(newList);
       setPoint(point + 1);

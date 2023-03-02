@@ -102,7 +102,6 @@ export default class scene1 extends Phaser.Scene{
 
         this.anims.create({
             key: "play",
-            //x: 500,
             frameRate: 4,
             frames: this.anims.generateFrameNumbers("cat", {start: 72, end:76}),
             repeat: -1
@@ -111,7 +110,6 @@ export default class scene1 extends Phaser.Scene{
         this.sprite.setInteractive();
         this.sprite.on('pointerover', () => {
             this.sprite.anims.play("play");
-            //meow.play();
         });
 
         this.point = this.input.mousePointer
@@ -121,20 +119,12 @@ export default class scene1 extends Phaser.Scene{
     }
     update(){
         if(this.point.isDown){
-            //console.log(this.point.x);
-            //this.moveTo(this.point, this.point.x, this.sprite.y, 100);
             this.sprite.anims.play("walk");
                 if (this.sprite.x >= 1040){
                     this.sprite.x = 50;
-                    //console.log(sprite.x)
                 }
             this.sprite.x += 8;
         }
-
-        // if(!this.heart.visible){
-        //     this.heart.visible = true;
-        // }
-
     
     }
 }

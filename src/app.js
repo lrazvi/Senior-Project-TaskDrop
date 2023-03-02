@@ -95,8 +95,6 @@ class TitleScene extends Phaser.Scene{
 
 
 function App() {
-  const [showInput, setShowInput] = useState(false);
-  const [username, setUserName] = useState('');
   const [messages, setMessage] = useState('');
   const [currMessage, setCurrMessage] = useState(0);
   const [showDialogBox, setShowDialogBox] = useState(false);
@@ -104,7 +102,7 @@ function App() {
   
   
   const startMessage = [
-    `hello ${(username !== "" ? username: "user")}`,
+    'hello user!',
     "Welcome to taskDrop, a productivity web app designed to help you have more fun while organizing your tasks",
     "As you can see, you have a little cat here to keep you company, you can click to make it walk or hover your mouse over it to play with it",
     "When you complete a certain amount of tasks you will gain affection points from your cat!",
@@ -140,11 +138,6 @@ function App() {
         backgroundColor: '#608cbc'
     });
 
-    const nameEventListener = ({ detail }) => {
-      setShowInput(true);
-    };
-    window.addEventListener('new-name', nameEventListener);
-
     const dialogBoxEventListener = ({ detail }) => {
       setCurrMessage(detail.currMessage);
       setMessage(
@@ -166,7 +159,6 @@ function App() {
 
     return () => {
         window.removeEventListener('new-list', listEventListener);
-        window.removeEventListener('new-name', nameEventListener);
         window.removeEventListener('new-dialog', dialogBoxEventListener);
         window.removeEventListener('finish', finishedEventListener);
     };
@@ -196,7 +188,6 @@ function App() {
         {showDialogBox ? 
           <>
             <DialogBox 
-            userName= {username}
             messages = {messages}
             onDialogEnded={handleMessageIsDone}
             />    

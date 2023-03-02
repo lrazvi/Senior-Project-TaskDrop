@@ -2,7 +2,7 @@ import React, { useState, useCallback } from "react";
 import '../style.css';
 import Message from "./messageanim";
 
-const DialogBox = ({userName, messages, onDialogEnded = () =>{}}) => {
+const DialogBox = ({messages, onDialogEnded = () =>{}}) => {
     const [currentMessage, setCurrentMessage] = useState(0);
     const [messageEnded, setMessageEnded] = useState(false);
 
