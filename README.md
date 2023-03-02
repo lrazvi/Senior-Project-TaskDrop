@@ -81,7 +81,115 @@ Create and Play Animation
 
 # app1.js
 This is the file where I created the to-do list and added the points.
-I utilize an arrow function to create App1 which takes in the parameter currMessage...
-At the very beginning of the function, I have many useState hooks for keeping track of the list content, inputs, points, etc.
+I utilize an arrow function to create App1 which is returned in app.js.
+At the very beginning of the function, I have many useState hooks for keeping track of the list content, inputs, points, etc. After that, I have many smaller arrow functions that carry out the functionality of the to-do list such as adding, deleting, and completing tasks in the list as well other elements I made with React. 
+Adding and Deleting list items
+```javascript
+    const addTodo = (todo) => {
+      const newTodo = {
+        id: Math.random(),
+        todo: todo,
+      };
 
+      setCurrTodo(newTodo);
+      // add the todo to the list
+      setList([...list, newTodo]);
+      // clear input box
+      setInput("");
+    };
+    const deleteTodo = (id) => {
+      // Filter out todo with the id
+      const newList = list.filter((todo) => todo.id !== id);
+      setList(newList);
+    };
+```
+Completing a task had a couple more details in the function since I correlated it with gaining points and wanted to add sound effects for these events. I created CustomEvents for when I wanted a specific sound to play (the eventListeners were defined in s1.js)
+Completing a list item
+```javascript
+    const completeTodo = (id) => {
+      // Filter out todo with the id
+      const newList = list.filter((todo) => todo.id !== id);
+      
+      setList(newList);
+      setPoint(point + 1);
+
+      if (point%3 === 0 && point > 2){
+        setAff(aff + '\u2764');
+
+        const mEvent = new CustomEvent('meow');
+        window.dispatchEvent(mEvent);
+      }
+      else{
+        const dEvent = new CustomEvent('ding');
+        window.dispatchEvent(dEvent);
+      }
+    };
+```
+The rest of the functions in this file are meant for dispatching events (for dialogues, starting a new scene, etc.) and showing/hiding certain React elements such as the Other Thoughts/Goals section.
+
+# dialogbox.js, messageanim.js
+These two files are where the dialogue box and animation of the messages are created.
+In dialogbox.js, I have an arrow function (DialogBox) that is returned in my main file app.js. Inside the function I have 2 useState hooks, one using a number to track the current message and the other for tracking whether or not the message has ended. Then, I have a useCallback hook for when the message has ended. Inside the hook, I dispatch a CustomEvent for the button sound effect and make adjustments to the useState hooks based off of whether or not the message ended and the current message number.
+```javascript
+    const handleClick = useCallback(() => {
+        const bEvent = new CustomEvent('button');
+        window.dispatchEvent(bEvent);
+        if (messageEnded) {
+            setMessageEnded(false);
+            if (currentMessage < messages.length - 1) {
+                setCurrentMessage(currentMessage + 1);
+            } 
+            else {
+                setCurrentMessage(0);
+                onDialogEnded();
+            }
+        }
+        else{
+            setMessageEnded(true);
+        }
+    }, [currentMessage, messageEnded, messages.length,  onDialogEnded]);
+```
+
+As for messageanim.js, I also create an arrow function (Message) that is returned in dialogbox.js. I utilize the React Spring library for creating a typewriter effect to the messages that show up in the dialogue box (specifically the useTransition and animated functions) as well as the useMemo hook to get each letter to show up individually. 
+```javascript
+    const  items  =  useMemo(()  =>
+      message.split('').map((letter, index)  =>  ({
+          item:  letter,
+          key: index,
+        })),
+      [message]
+    );
+  
+    const  transitions  =  useTransition(items,  {
+      trail:  35,
+      from:  { display:  "none"  },
+      enter:  { display:  ""  },
+      onRest: (item) => {
+        if (item.key === items.length - 1) {
+            onMessageEnded();
+        }
+      }
+    });
+```
+
+# s1.js
+This file contains the main scene that the user will spend the most time in when the project runs. Similarly to my TitleScene, a new Phaser class is created, labeled scene1, where it contains the constructor, preload, and create functions, as well as an update function that keeps track of when the player clicks (to make the cat sprite walk).
+
+The preload function is quite similar to the TitleScene except for an extra few audios. In my create function, I add all the tiles, sprites, audios, as well as the eventListeners as mentioned earlier for the audios to play at certain times. 
+
+One difference between this scene and the others is that the cat sprite is interactive where clicking will make it walk and hovering over it with the mouse will allow the user to play with it (both of these done by creating specific animations for these events). If the mouse pointer is moved away from the cat sprite, the idle animation is the default that will play.
+
+```javascript
+        this.sprite.setInteractive();
+        this.sprite.on('pointerover', () => {
+            this.sprite.anims.play("play");
+        });
+ 
+        this.sprite.on('pointerout', () => 
+            {this.sprite.anims.play("idle")
+        });
+        
+        this.sprite.anims.play("idle");
+```
+I also have file for a finish scene (end.js), but it essentially has the same code from the TitleScene and scene1.
 
